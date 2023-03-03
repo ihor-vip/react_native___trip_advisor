@@ -1,10 +1,11 @@
-import {SafeAreaView, Text, View, Image, ScrollView} from "react-native";
+import {SafeAreaView, Text, View, Image, ScrollView, TouchableOpacity} from "react-native";
 import React, {useLayoutEffect, useState} from "react";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {useNavigation} from "@react-navigation/native";
 import {Attractions, Avatar, Hotels, Restaurants} from "../assets";
 import {MAPS_API_KEY} from '@env';
 import MenuContainer from "../components/MenuContainer";
+import {FontAwesome} from "@expo/vector-icons";
 const Discover = () => {
     const navigation = useNavigation();
 
@@ -73,6 +74,23 @@ const Discover = () => {
                         setType={setType}
                     />
                 </View>
+
+                <View>
+                    <View className="flex-row items-center justify-between px-4 mt-8">
+                        <Text className="text-[#2C7379] text-[28px] font-bold">
+                            Top Tips
+                        </Text>
+                        <TouchableOpacity className="flex-row items-center justify-center space-x-2">
+                            <Text className="text-[#A0C4C7] text-[20px] font-bold">
+                                Explore
+                            </Text>
+                            <FontAwesome
+                                name="long-arrow-right"
+                                size={24}
+                                color="#A0C4C7"
+                            />
+                        </TouchableOpacity>
+                    </View>
             </ScrollView>
         </SafeAreaView>
     )
