@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import { Text, SafeAreaView} from 'react-native';
 import {TailwindProvider} from "tailwindcss-react-native";
 
 export default function App() {
   return (
     <TailwindProvider>
-      <View>
+      <SafeAreaView className='flex-1 items-center justify-center'>
         <Text>Hello</Text>
         <StatusBar style="auto" />
-      </View>
+      </SafeAreaView>
     </TailwindProvider>
   );
 }
