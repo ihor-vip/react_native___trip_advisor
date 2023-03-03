@@ -1,8 +1,9 @@
 import {SafeAreaView, Text, View, Image} from "react-native";
 import React, {useLayoutEffect} from "react";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {useNavigation} from "@react-navigation/native";
 import {Avatar} from "../assets";
-
+import {MAPS_API_KEY} from '@env';
 const Discover = () => {
     const navigation = useNavigation();
 
@@ -25,6 +26,19 @@ const Discover = () => {
                         className="w-full h-full rounded-md object-cover"
                     />
                 </View>
+            </View>
+
+            <View className="flex-row items-center bg-white mx-4 rounded-xl py-1 px-4 shadow-lg mt-4">
+                <GooglePlacesAutocomplete
+                    placeholder="Search"
+                    onPress={(data, details = null) => {
+                        console.log(data, details);
+                    }}
+                    query={{
+                        key: MAPS_API_KEY,
+                        language: "en",
+                    }}
+                />
             </View>
         </SafeAreaView>
     )
