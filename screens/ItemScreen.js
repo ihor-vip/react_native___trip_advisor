@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {  FontAwesome5} from "@expo/vector-icons";
+import {FontAwesome, FontAwesome5, MaterialIcons} from "@expo/vector-icons";
 
 const ItemScreen = ({ route }) => {
     const navigation = useNavigation();
@@ -60,6 +60,58 @@ const ItemScreen = ({ route }) => {
                             <Text>{data?.open_now_text}</Text>
                         </View>
                     </View>
+                </View>
+
+                <View className="mt-6">
+                    <Text className="text-[#428288] text-[24px] font-bold">
+                        {data?.name}
+                    </Text>
+                    <View className="flex-row items-center space-x-2 mt-2">
+                        <FontAwesome name="map-marker" size={25} color="#8C9EA6" />
+                        <Text className="text-[#8C9EA6] text-[20px] font-bold">
+                            {data?.location_string}
+                        </Text>
+                    </View>
+                </View>
+
+                <View className="mt-4 flex-row items-center justify-between">
+                    {data?.rating && (
+                        <View className=" flex-row items-center space-x-2">
+                            <View className="w-12 h-12 rounded-2xl bg-red-100 items-center justify-center shadow-md">
+                                <FontAwesome name="star" size={24} color="#D58574" />
+                            </View>
+                            <View>
+                                <Text className="text-[#515151]">{data?.rating}</Text>
+                                <Text className="text-[#515151]">Ratings</Text>
+                            </View>
+                        </View>
+                    )}
+
+                    {data?.price_level && (
+                        <View className=" flex-row items-center space-x-2">
+                            <View className="w-12 h-12 rounded-2xl bg-red-100 items-center justify-center shadow-md">
+                                <MaterialIcons name="attach-money" size={24} color="black" />
+                            </View>
+                            <View>
+                                <Text className="text-[#515151]">{data?.price_level}</Text>
+                                <Text className="text-[#515151]">Price Level</Text>
+                            </View>
+                        </View>
+                    )}
+
+                    {data?.bearing && (
+                        <View className=" flex-row items-center space-x-2">
+                            <View className="w-12 h-12 rounded-2xl bg-red-100 items-center justify-center shadow-md">
+                                <FontAwesome5 name="map-signs" size={24} color="black" />
+                            </View>
+                            <View>
+                                <Text className="text-[#515151] capitalize">
+                                    {data?.bearing}
+                                </Text>
+                                <Text className="text-[#515151]">Bearing</Text>
+                            </View>
+                        </View>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView>
