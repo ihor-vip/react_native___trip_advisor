@@ -12,6 +12,7 @@ const Discover = () => {
     const navigation = useNavigation();
 
     const [type, setType] = useState("restaurants");
+    const [isLoading, setIsLoading] = useState(false);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -50,55 +51,61 @@ const Discover = () => {
             </View>
 
             {/* Menu Container */}
-            <ScrollView>
-                <View className=" flex-row items-center justify-between px-8 mt-8">
-                    <MenuContainer
-                        key={"hotels"}
-                        title="Hotels"
-                        imageSrc={Hotels}
-                        type={type}
-                        setType={setType}
-                    />
-
-                    <MenuContainer
-                        key={"attractions"}
-                        title="Attractions"
-                        imageSrc={Attractions}
-                        type={type}
-                        setType={setType}
-                    />
-
-                    <MenuContainer
-                        key={"restaurants"}
-                        title="Restaurants"
-                        imageSrc={Restaurants}
-                        type={type}
-                        setType={setType}
-                    />
+            {isLoading ? (
+                <View className=" flex-1 items-center justify-center">
+                    <ActivityIndicator size="large" color="#0B646B"/>
                 </View>
+            ) : (
+                <ScrollView>
+                    <View className=" flex-row items-center justify-between px-8 mt-8">
+                        <MenuContainer
+                            key={"hotels"}
+                            title="Hotels"
+                            imageSrc={Hotels}
+                            type={type}
+                            setType={setType}
+                        />
 
-                <View>
-                    <View className="flex-row items-center justify-between px-4 mt-8">
-                        <Text className="text-[#2C7379] text-[28px] font-bold">
-                            Top Tips
-                        </Text>
-                        <TouchableOpacity className="flex-row items-center justify-center space-x-2">
-                            <Text className="text-[#A0C4C7] text-[20px] font-bold">
-                                Explore
-                            </Text>
-                            <FontAwesome
-                                name="long-arrow-right"
-                                size={24}
-                                color="#A0C4C7"
-                            />
-                        </TouchableOpacity>
+                        <MenuContainer
+                            key={"attractions"}
+                            title="Attractions"
+                            imageSrc={Attractions}
+                            type={type}
+                            setType={setType}
+                        />
+
+                        <MenuContainer
+                            key={"restaurants"}
+                            title="Restaurants"
+                            imageSrc={Restaurants}
+                            type={type}
+                            setType={setType}
+                        />
                     </View>
-                </View>
 
-                <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
-                    <ItemCarDontainer key={'101'} imageSrc={''} title={''} location={''} data={''} />
-                </View>
-            </ScrollView>
+                    <View>
+                        <View className="flex-row items-center justify-between px-4 mt-8">
+                            <Text className="text-[#2C7379] text-[28px] font-bold">
+                                Top Tips
+                            </Text>
+                            <TouchableOpacity className="flex-row items-center justify-center space-x-2">
+                                <Text className="text-[#A0C4C7] text-[20px] font-bold">
+                                    Explore
+                                </Text>
+                                <FontAwesome
+                                    name="long-arrow-right"
+                                    size={24}
+                                    color="#A0C4C7"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
+                        <ItemCarDontainer key={'101'} imageSrc={''} title={''} location={''} data={''}/>
+                    </View>
+                </ScrollView>
+            )}
         </SafeAreaView>
     )
 }
