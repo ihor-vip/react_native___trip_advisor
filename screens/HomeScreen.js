@@ -5,11 +5,11 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, {useLayoutEffect} from "react";
 import * as Animatable from "react-native-animatable";
 
-import { useNavigation } from "@react-navigation/native";
-import { HeroImage } from "../assets";
+import {useNavigation} from "@react-navigation/native";
+import {HeroImage} from "../assets";
 
 const HomeScreen = () => {
     const navigation = useNavigation();

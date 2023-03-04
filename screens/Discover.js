@@ -1,12 +1,21 @@
-import {SafeAreaView, Text, View, Image, ScrollView, TouchableOpacity, ActivityIndicator} from "react-native";
+import {
+    View,
+    Text,
+    SafeAreaView,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    ActivityIndicator,
+} from "react-native";
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
+import {MAPS_API_KEY} from "@env";
 import {useNavigation} from "@react-navigation/native";
 import {Attractions, Avatar, Hotels, NotFound, Restaurants} from "../assets";
-import {MAPS_API_KEY} from '@env';
 import MenuContainer from "../components/MenuContainer";
+
 import {FontAwesome} from "@expo/vector-icons";
-import ItemCarDontainer from "../components/ItemCarDontainer";
+import ItemCardContainer from "../components/ItemCardContainer";
 import {getPlacesData} from "../api";
 
 const Discover = () => {
@@ -28,13 +37,13 @@ const Discover = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng).then((data) => {
+        getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, type).then((data) => {
             setMainData(data);
             setInterval(() => {
                 setIsLoading(false);
             }, 2000);
         });
-    }, [bl_lat, bl_lng, tr_lat, tr_lng]);
+    }, [bl_lat, bl_lng, tr_lat, tr_lng, type]);
 
     return (
         <SafeAreaView className="flex-1 bg-white relative">
@@ -58,6 +67,7 @@ const Discover = () => {
                     placeholder="Search"
                     fetchDetails={true}
                     onPress={(data, details = null) => {
+                        // 'details' is provided when fetchDetails = true
                         console.log(details?.geometry?.viewport);
                         setBl_lat(details?.geometry?.viewport?.southwest?.lat);
                         setBl_lng(details?.geometry?.viewport?.southwest?.lng);
@@ -120,40 +130,43 @@ const Discover = () => {
                                 />
                             </TouchableOpacity>
                         </View>
-                    </View>
 
-                    <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
-                        {mainData?.length > 0 ? <>
-                                {mainData?.map((data, i) => (
-                                    <ItemCarDontainer
-                                        key={i}
-                                        imageSrc={
-                                            data?.photo?.images?.medium?.url
-                                                ? data?.photo?.images?.medium?.url
-                                                : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
-                                        }
-                                        title={data?.name}
-                                        location={data?.location_string}
-                                        data={data}
-                                    />
-                                ))}
-                                                </> :
-                                                <>
-                                                    <View className="w-full h-[400px] items-center space-y-8 justify-center">
-                                                        <Image
-                                                            source={NotFound}
-                                                            className=" w-32 h-32 object-cover"
-                                                        />
-                                                        <Text className="text-2xl text-[#428288] font-semibold">
-                                                            Opps...No Data Found
-                                                        </Text>
-                                                    </View>
-                                                </>}
+                        <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
+                            {mainData?.length > 0 ? (
+                                <>
+                                    {mainData?.map((data, i) => (
+                                        <ItemCardContainer
+                                            key={i}
+                                            imageSrc={
+                                                data?.photo?.images?.medium?.url
+                                                    ? data?.photo?.images?.medium?.url
+                                                    : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+                                            }
+                                            title={data?.name}
+                                            location={data?.location_string}
+                                            data={data}
+                                        />
+                                    ))}
+                                </>
+                            ) : (
+                                <>
+                                    <View className="w-full h-[400px] items-center space-y-8 justify-center">
+                                        <Image
+                                            source={NotFound}
+                                            className=" w-32 h-32 object-cover"
+                                        />
+                                        <Text className="text-2xl text-[#428288] font-semibold">
+                                            Opps...No Data Found
+                                        </Text>
+                                    </View>
+                                </>
+                            )}
+                        </View>
                     </View>
                 </ScrollView>
             )}
         </SafeAreaView>
-    )
-}
+    );
+};
 
 export default Discover;

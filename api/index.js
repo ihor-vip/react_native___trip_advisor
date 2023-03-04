@@ -4,7 +4,7 @@ import {X_RAPID_API_KEY} from '@env';
 export const getPlacesData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
     try {
         const {
-            data: { data },
+            data: {data},
         } = await axios.get(
             `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`,
             {
