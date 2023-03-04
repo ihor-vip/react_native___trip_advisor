@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {FontAwesome, FontAwesome5, MaterialIcons} from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 
 const ItemScreen = ({ route }) => {
     const navigation = useNavigation();
@@ -112,6 +112,52 @@ const ItemScreen = ({ route }) => {
                             </View>
                         </View>
                     )}
+                </View>
+
+                {data?.description && (
+                    <Text className="mt-4 tracking-wide text-[16px] font-semibold text-[#97A6AF]">
+                        {data?.description}
+                    </Text>
+                )}
+
+                {data?.cuisine && (
+                    <View className="flex-row gap-2 items-center justify-start flex-wrap mt-4">
+                        {data?.cuisine.map((n) => (
+                            <TouchableOpacity
+                                key={n.key}
+                                className="px-2 py-1 rounded-md bg-emerald-100"
+                            >
+                                <Text>{n.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                )}
+
+                <View className=" space-y-2 mt-4 bg-gray-100 rounded-2xl px-4 py-2">
+                    {data?.phone && (
+                        <View className="items-center flex-row space-x-6">
+                            <FontAwesome name="phone" size={24} color="#428288" />
+                            <Text className="text-lg">{data?.phone}</Text>
+                        </View>
+                    )}
+                    {data?.email && (
+                        <View className="items-center flex-row space-x-6">
+                            <FontAwesome name="envelope" size={24} color="#428288" />
+                            <Text className="text-lg">{data?.email}</Text>
+                        </View>
+                    )}
+                    {data?.address && (
+                        <View className="items-center flex-row space-x-6">
+                            <FontAwesome name="map-pin" size={24} color="#428288" />
+                            <Text className="text-lg">{data?.address}</Text>
+                        </View>
+                    )}
+
+                    <View className="mt-4 px-4 py-4 rounded-lg bg-[#06B2BE] items-center justify-center mb-12">
+                        <Text className="text-3xl font-semibold uppercase tracking-wider text-gray-100">
+                            Book Now
+                        </Text>
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
