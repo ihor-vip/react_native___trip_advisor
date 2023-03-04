@@ -28,13 +28,13 @@ const Discover = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        getPlacesData().then((data) => {
+        getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng).then((data) => {
             setMainData(data);
             setInterval(() => {
                 setIsLoading(false);
             }, 2000);
         });
-    }, []);
+    }, [bl_lat, bl_lng, tr_lat, tr_lng]);
 
     return (
         <SafeAreaView className="flex-1 bg-white relative">
@@ -59,6 +59,10 @@ const Discover = () => {
                     fetchDetails={true}
                     onPress={(data, details = null) => {
                         console.log(details?.geometry?.viewport);
+                        setBl_lat(details?.geometry?.viewport?.southwest?.lat);
+                        setBl_lng(details?.geometry?.viewport?.southwest?.lng);
+                        setTr_lat(details?.geometry?.viewport?.northeast?.lat);
+                        setTr_lng(details?.geometry?.viewport?.northeast?.lng);
                     }}
                     query={{
                         key: MAPS_API_KEY,
