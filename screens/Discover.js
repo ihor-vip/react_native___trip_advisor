@@ -1,8 +1,8 @@
-import {SafeAreaView, Text, View, Image, ScrollView, TouchableOpacity} from "react-native";
+import {SafeAreaView, Text, View, Image, ScrollView, TouchableOpacity, ActivityIndicator} from "react-native";
 import React, {useLayoutEffect, useState} from "react";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 import {useNavigation} from "@react-navigation/native";
-import {Attractions, Avatar, Hotels, Restaurants} from "../assets";
+import {Attractions, Avatar, Hotels, NotFound, Restaurants} from "../assets";
 import {MAPS_API_KEY} from '@env';
 import MenuContainer from "../components/MenuContainer";
 import {FontAwesome} from "@expo/vector-icons";
@@ -13,6 +13,7 @@ const Discover = () => {
 
     const [type, setType] = useState("restaurants");
     const [isLoading, setIsLoading] = useState(false);
+    const [mainData, setMainData] = useState([]);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -102,7 +103,20 @@ const Discover = () => {
                     </View>
 
                     <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
-                        <ItemCarDontainer key={'101'} imageSrc={''} title={''} location={''} data={''}/>
+                        {mainData?.length > 0 ? <>
+                                                     <ItemCarDontainer key={'101'} imageSrc={''} title={''} location={''} data={''}/>
+                                                </> :
+                                                <>
+                                                    <View className="w-full h-[400px] items-center space-y-8 justify-center">
+                                                        <Image
+                                                            source={NotFound}
+                                                            className=" w-32 h-32 object-cover"
+                                                        />
+                                                        <Text className="text-2xl text-[#428288] font-semibold">
+                                                            Opps...No Data Found
+                                                        </Text>
+                                                    </View>
+                                                </>}
                     </View>
                 </ScrollView>
             )}
