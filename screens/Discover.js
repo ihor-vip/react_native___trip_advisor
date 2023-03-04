@@ -15,6 +15,10 @@ const Discover = () => {
     const [type, setType] = useState("restaurants");
     const [isLoading, setIsLoading] = useState(false);
     const [mainData, setMainData] = useState([]);
+    const [bl_lat, setBl_lat] = useState(null);
+    const [bl_lng, setBl_lng] = useState(null);
+    const [tr_lat, setTr_lat] = useState(null);
+    const [tr_lng, setTr_lng] = useState(null);
 
     useLayoutEffect(() => {
         navigation.setOptions({
