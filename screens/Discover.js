@@ -1,5 +1,5 @@
 import {SafeAreaView, Text, View, Image, ScrollView, TouchableOpacity, ActivityIndicator} from "react-native";
-import React, {useLayoutEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 import {useNavigation} from "@react-navigation/native";
 import {Attractions, Avatar, Hotels, NotFound, Restaurants} from "../assets";
@@ -7,6 +7,7 @@ import {MAPS_API_KEY} from '@env';
 import MenuContainer from "../components/MenuContainer";
 import {FontAwesome} from "@expo/vector-icons";
 import ItemCarDontainer from "../components/ItemCarDontainer";
+import {getPlacesData} from "../api";
 
 const Discover = () => {
     const navigation = useNavigation();
@@ -20,6 +21,17 @@ const Discover = () => {
             headerShown: false,
         });
     }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        getPlacesData().then((data) => {
+            setMainData(data);
+            setInterval(() => {
+                setIsLoading(false);
+            }, 2000);
+        });
+    }, []);
+
     return (
         <SafeAreaView className="flex-1 bg-white relative">
             <View className="flex-row items-center justify-between px-8">
@@ -104,7 +116,18 @@ const Discover = () => {
 
                     <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
                         {mainData?.length > 0 ? <>
-                                                     <ItemCarDontainer key={'101'} imageSrc={''} title={''} location={''} data={''}/>
+                                {mainData?.map((data, i) => (
+                                    <ItemCarDontainer
+                                        key={i}
+                                        imageSrc={
+                                            data?.photo?.images?.medium?.url
+                                                ? data?.photo?.images?.medium?.url
+                                                : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+                                        }
+                                        title={data?.name}
+                                        location={data?.location_string}
+                                    />
+                                ))}
                                                 </> :
                                                 <>
                                                     <View className="w-full h-[400px] items-center space-y-8 justify-center">
